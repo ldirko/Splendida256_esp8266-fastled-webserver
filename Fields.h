@@ -16,8 +16,6 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-uint8_t power = 1;
-uint8_t brightness = brightnessMap[brightnessIndex];
 
 //String setPower(String value) {
 //  power = value.toInt();
@@ -81,6 +79,28 @@ String getAutoplayDuration() {
   return String(autoplayDuration);
 }
 
+String getShowClock() {
+  return String(showClock);
+}
+
+String getClockBackgroundFade() {
+  return String(clockBackgroundFade);
+}
+
+void setShowClock(uint8_t value)
+{
+  showClock = value == 0 ? 0 : 1;
+  writeAndCommitSettings();
+  broadcastInt("showClock", showClock);
+}
+
+void setClockBackgroundFade(uint8_t value)
+{
+  clockBackgroundFade = value;
+  writeAndCommitSettings();
+  broadcastInt("clockBackgroundFade", clockBackgroundFade);
+}
+
 String getSolidColor() {
   return String(solidColor.r) + "," + String(solidColor.g) + "," + String(solidColor.b);
 }
@@ -103,10 +123,6 @@ String getTwinkleSpeed() {
 
 String getTwinkleDensity() {
   return String(twinkleDensity);
-}
-
-String getCoolLikeIncandescent() {
-  return String(coolLikeIncandescent);
 }
 
 String getName() {
@@ -242,10 +258,18 @@ String setSHueMax(String value) {
   sHueMax = value.toInt(); return value;
 }
 
+String getGamma() {
+  return String(useGamma);
+}
+String setGamma(String value) {
+  useGamma = value.toInt(); return value;
+}
+
 FieldList fields = {
     {"name", "Name", LabelFieldType, 0, 0, getName},
-
+     
     {"power", "Power", BooleanFieldType, 0, 1, getPower},
+    {"gamma", "GammaCorrection", BooleanFieldType, 0, 1, getGamma, NULL, setGamma},
     {"brightness", "Brightness", NumberFieldType, 1, 255, getBrightness},
     {"pattern", "Pattern", SelectFieldType, 0, patternCount, getPattern, getPatterns},
     {"palette", "Palette", SelectFieldType, 0, paletteCount, getPalette, getPalettes},
@@ -254,21 +278,15 @@ FieldList fields = {
     {"autoplaySection", "Autoplay", SectionFieldType},
     {"autoplay", "Autoplay", BooleanFieldType, 0, 1, getAutoplay},
     {"autoplayDuration", "Autoplay Duration", NumberFieldType, 0, 255, getAutoplayDuration},
+    
+    {"clock", "Clock", SectionFieldType},	
+    {"showClock", "Show Clock", BooleanFieldType, 0, 1, getShowClock},	
+    {"clockBackgroundFade", "Background Fade", NumberFieldType, 0, 255, getClockBackgroundFade},
 
     {"solidColorSection", "Solid Color", SectionFieldType},
     {"solidColor", "Color", ColorFieldType, 0, 255, getSolidColor},
 
-    {"fireSection", "Fire & Water", SectionFieldType},
-    {"cooling", "Cooling", NumberFieldType, 0, 255, getCooling},
-    {"sparking", "Sparking", NumberFieldType, 0, 255, getSparking},
-
-    {"twinklesSection", "Twinkles", SectionFieldType},
-    {"twinkleSpeed", "Twinkle Speed", NumberFieldType, 0, 8, getTwinkleSpeed},
-    {"twinkleDensity", "Twinkle Density", NumberFieldType, 0, 8, getTwinkleDensity},
-    {"coolLikeIncandescent", "Incandescent Cool", BooleanFieldType, 0, 1, getCoolLikeIncandescent},
-
-
-    {"prideSection", "Pride", SectionFieldType},
+    {"prideSection", "Pride & ColorWaves", SectionFieldType},
 
     {"saturationBpm", "Saturation BPM", NumberFieldType, 0, 255, getSaturationBpm, NULL, setSaturationBpm},
     {"saturationMin", "Saturation Min", NumberFieldType, 0, 255, getSaturationMin, NULL, setSaturationMin},
@@ -293,6 +311,15 @@ FieldList fields = {
     {"sHueBpm", "S Hue BPM", NumberFieldType, 0, 255, getSHueBpm, NULL, setSHueBpm},
     {"sHueMin", "S Hue Min", NumberFieldType, 0, 255, getSHueMin, NULL, setSHueMin},
     {"sHueMax", "S Hue Max", NumberFieldType, 0, 255, getSHueMax, NULL, setSHueMax},
+
+
+    {"fireSection", "Fire & Water", SectionFieldType},
+    {"cooling", "Cooling", NumberFieldType, 0, 255, getCooling},
+    {"sparking", "Sparking", NumberFieldType, 0, 255, getSparking},
+
+    {"twinklesSection", "Twinkles", SectionFieldType},
+    {"twinkleSpeed", "Twinkle Speed", NumberFieldType, 0, 8, getTwinkleSpeed},
+    {"twinkleDensity", "Twinkle Density", NumberFieldType, 0, 8, getTwinkleDensity}
 };
 
 uint8_t fieldCount = ARRAY_SIZE(fields);
