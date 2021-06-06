@@ -2,11 +2,13 @@ FastLED + ESP8266 Web Server
 =========
 
 ldirko https://twitter.com/ldir_ko __________________
-this fork is for run this firmware on Splendida 256 by Uri Shaked.
-Splendida github with PCB https://github.com/wokwi/splendida
-https://twitter.com/UriShaked autor
-https://www.tindie.com/products/wokwi/splendida/ buy it here
-Also i add all of my Splendida demo reel effects (in patterns list named with SPL_xxx) from https://github.com/ldirko/Splendida-Fibonacci-256-demoreel 
+
+this fork is for run this firmware on Splendida 256 by Uri Shaked. 
+Splendida github with PCB https://github.com/wokwi/splendida.
+https://twitter.com/UriShaked autor.
+https://www.tindie.com/products/wokwi/splendida/ buy it here.
+Also i add all of my Splendida demo reel effects (in patterns list named with SPL_xxx and in file list is ldirko_Demo_Reel.h) from https://github.com/ldirko/Splendida-Fibonacci-256-demoreel and now this is collaboration firmware. 
+I add button for Gamma Correction. Some effects like RGB caleidoscope looks realy good with this.  
 _____________________
 
 Control an addressable LED strip with an ESP8266 via a web browser or infrared remote control.
